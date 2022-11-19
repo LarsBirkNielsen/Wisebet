@@ -1,0 +1,114 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Wisebet.Authorization
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Wisebet</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap"
+          rel="stylesheet" />
+
+    <script type="module"
+            src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule=""
+            src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+
+    <link rel="stylesheet" href="~/css/general.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Wisebet.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="header">
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a href="/Home">
+                <img class="logo" alt="Omnifood logo" src="/Images/Wisebet.png" />
+            </a>
+
+            <nav class="main-nav">
+                <ul class="main-nav-list">
+                     <li class="nav-item dropdown">
+                        <a class="main-nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Results
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../LeagueHistory/PremierLeagueHistory">Premier League</a></li>
+                            <li><a class="dropdown-item" href="../LeagueHistory/SerieAHistory">Serie A</a></li>
+                            <li><a class="dropdown-item" href="../LeagueHistory/LaLigaHistory">La Liga</a></li>
+                            <li><a class="dropdown-item" href="../LeagueHistory/Ligue1History">Ligue 1</a></li>
+                            <li><a class="dropdown-item" href="../LeagueHistory/PrimeiraDivisionHistory">Primeira Division</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="../Predictions">See All</a></li>
+                        </ul>
+                    </li>                 
+                    <li><a class="main-nav-link" href="/Predictions/PredictionList">Predictions</a></li>
+                    <partial name="_LoginPartial" />
+                </ul>
+            </nav>
+
+            <button class="btn-mobile-nav">
+                <ion-icon class="icon-mobile-nav" name="menu-outline"></ion-icon>
+                <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+            </button>
+        }
+        else
+        {
+            <a href="/Index">
+                <img class="logo" alt="Omnifood logo" src="/Images/Wisebet.png" />
+            </a>
+
+            <nav class="main-nav">
+                <ul class="main-nav-list">
+                     <li class="nav-item dropdown">
+                        <a class="main-nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Results
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../LeagueHistory/PremierLeagueHistory">Premier League</a></li>
+                            <li><a class="dropdown-item" href="../LeagueHistory/SerieAHistory">Serie A</a></li>
+                            <li><a class="dropdown-item" href="../LeagueHistory/LaLigaHistory">La Liga</a></li>
+                            <li><a class="dropdown-item" href="../LeagueHistory/Ligue1History">Ligue 1</a></li>
+                            <li><a class="dropdown-item" href="../LeagueHistory/PrimeiraDivisionHistory">Primeira Division</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="../LeagueHistory/AllHistory">See All</a></li>
+                        </ul>
+                    </li>
+                    <partial name="_LoginPartial" />
+                </ul>
+            </nav>
+
+            <button class="btn-mobile-nav">
+                <ion-icon class="icon-mobile-nav" name="menu-outline"></ion-icon>
+                <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+            </button>
+        }
+
+    </header>
+
+    <div class="">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @*    <footer class="border-top footer text-muted">
+        <div class="container">
+        &copy; 2022 - Wisebet - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+        </footer>*@
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

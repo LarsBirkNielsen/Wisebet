@@ -1,0 +1,48 @@
+﻿@page
+@model Wisebet.Pages.Predictions.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+
+
+
+<div class="section-cta">
+    <div class="container">
+        <div class="">
+            <div class="cta-text-box">
+                <div class="container grid sm-row-gap grid--3-cols grid--center-v">
+                    
+                    <div class="heading-secondary-delete">
+                    </div>
+                    <div>
+                        <p class="heading-secondary-delete">@Html.DisplayFor(model => model.Prediction.KickOff)</p>                      
+                    </div>
+                    <div class="heading-secondary-delete">
+                    </div>
+
+                    <div class="heading-secondary-delete">
+                        @Html.DisplayFor(model => model.Prediction.HomeTeam)
+                    </div>
+                    <div>
+                        <p class="heading-secondary-delete"> VS.</p>
+                    </div>
+                    <div class="heading-secondary">
+                        @Html.DisplayFor(model => model.Prediction.AwayTeam)
+                    </div>
+                </div>
+
+                <form method="post">
+                    <input type="hidden" asp-for="Prediction.Id" />
+                    <input type="submit" value="delete" class="btn-delete" />
+                    <a class="btn-back" asp-page="./Index">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

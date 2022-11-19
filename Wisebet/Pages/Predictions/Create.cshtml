@@ -1,0 +1,92 @@
+﻿@page
+@model Wisebet.Pages.Predictions.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<section class="section-cta" id="cta">
+    <div class="container">
+        <div class="">
+            <div class="cta-text-box">
+                <h2 class="heading-secondary">Create a Prediction</h2>
+                <hr />
+                <br />
+                <br />
+                <br />
+                <form class="create-prediction-form" method="post">
+                    <div class="container grid sm-row-gap grid--2-cols grid--center-v">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Prediction.KickOff" class="control-label"></label>
+                            <input asp-for="Prediction.KickOff" class="form-control" />
+                            <span asp-validation-for="Prediction.KickOff" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Prediction.League" class="control-label"></label>
+                            <select asp-for="Prediction.League" class="form-control">
+                                <option value="">Choose League</option>
+                                <option value="Premier League">Premier League</option>
+                                <option value="Serie A">Serie A</option>
+                                <option value="La Liga">La Liga</option>
+                                <option value="Primeira Liga">Primeira Division</option>
+                                <option value="Ligue 1">Ligue 1</option>
+                            </select>
+                            <span asp-validation-for="Prediction.League" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Prediction.HomeTeam" class="control-label"></label>
+                            <input asp-for="Prediction.HomeTeam" class="form-control" />
+                            <span asp-validation-for="Prediction.HomeTeam" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Prediction.AwayTeam" class="control-label"></label>
+                            <input asp-for="Prediction.AwayTeam" class="form-control" />
+                            <span asp-validation-for="Prediction.AwayTeam" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Prediction.Tip" class="control-label"></label>
+                            <input asp-for="Prediction.Tip" class="form-control" />
+                            <span asp-validation-for="Prediction.Tip" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Prediction.Odds" class="control-label"></label>
+                            <input asp-for="Prediction.Odds" class="form-control" />
+                            <span asp-validation-for="Prediction.Odds" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Prediction.Stake" class="control-label"></label>
+                            <input asp-for="Prediction.Stake" class="form-control" />
+                            <span asp-validation-for="Prediction.Stake" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Prediction.Status" class="control-label"></label>
+                            <select asp-for="Prediction.Status" class="form-control">
+                                <option value="Pending">Pending</option>
+                                <option value="Won">Won</option>
+                                <option value="Lost">Lost</option>
+                            </select>
+                            <span asp-validation-for="Prediction.Status" class="text-danger"></span>
+                        </div>
+                        <div class="form-btn-submit">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                        <div>
+                            <a class="btn form-btn-return" asp-page="Index">Back to List</a>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

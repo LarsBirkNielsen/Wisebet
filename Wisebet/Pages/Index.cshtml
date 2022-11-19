@@ -1,0 +1,526 @@
+﻿@page
+@using Wisebet.Authorization
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+</head>
+
+@if (Model.isAnyPendingAttention && User.IsInRole(Constants.PredictionAdminRole))
+{
+    Response.Redirect("Predictions/PendingToBeUpdated");
+}
+
+<main>
+    <section class="section-hero">
+        <div class="hero">
+            <div class="hero-text-box">
+                <h1 class="heading-primary">
+                    Algoritmic betting predictions, every single week!
+                </h1>
+                <p class="hero-description">
+                    We offer a different way to look at betting, where a computer-model makes the predictions
+                    without "feelings" and only based on data. The algorithms are tailored to multiple leagues.
+                </p>
+                <a href="#cta" class="btn btn--full margin-right-sm">Sign Up</a>
+
+                <a href="#how" class="btn btn--outline">Learn more &darr;</a>
+                <div class="covered-leagues">
+                    <div class="covered-leagues-imgs">
+                        <img src="images/logos/italy.png" alt="italy flag" />
+                        <img src="images/logos/england.png" alt="england flag" />
+                        <img src="images/logos/spain.png" alt="spain flag" />
+                        <img src="images/logos/france.png" alt="france flag" />
+                    </div>
+                    <p class="covered-leagues-text">
+                        <span>20.000+</span> analyzed football matches!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-stats">
+        <div class="container">
+            <h2 class="heading-stats">Stats since we aired</h2>
+            <div class="container grid grid--3-cols grid--center-v">
+                <div class="stats-box">
+                    <h2 class="stats-box-header">Total Predictions:</h2>
+                    <p>@Model.TotalPredictionsPlayed</p>
+                </div>
+                <div class="stats-box">
+                    <h2 class="stats-box-header">Wins:</h2>
+                    <p>@Model.WinsCount</p>
+                </div>
+                <div class="stats-box">
+                    <h2 class="stats-box-header">Lost:</h2>
+                    <p>@Model.LostCount</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="section-how" id="how">
+        <div class="container">
+            <span class="subheading">How it works</span>
+            <h2 class="heading-secondary">
+                Our prediction model is build by 3 steps
+            </h2>
+        </div>
+
+        <div class="container grid grid--2-cols grid--center-v">
+            <!-- STEP 01 -->
+            <div class="step-text-box">
+                <p class="step-number">01</p>
+                <h3 class="heading-tertiary">
+                    Collecting Data
+                </h3>
+                <p class="step-description">
+                    Never again waste time thinking about what to eat! Omnifood AI
+                    will create a 100% personalized weekly meal plan just for you. It
+                    makes sure you get all the nutrients and vitamins you need, no
+                    matter what diet you follow!
+                </p>
+            </div>
+
+            <div class="step-img-box">
+            </div>
+
+            <!-- STEP 02 -->
+            <div class="step-img-box">
+            </div>
+            <div class="step-text-box">
+                <p class="step-number">02</p>
+                <h3 class="heading-tertiary">Training Data</h3>
+                <p class="step-description">
+                    Once per week, approve the meal plan generated for you by Omnifood
+                    AI. You can change ingredients, swap entire meals, or even add
+                    your own recipes.
+                </p>
+            </div>
+
+            <!-- STEP 03 -->
+            <div class="step-text-box">
+                <p class="step-number">03</p>
+                <h3 class="heading-tertiary">Test Data</h3>
+                <p class="step-description">
+                    Best chefs in town will cook your selected meal every day, and we
+                    will deliver it to your door whenever works best for you. You can
+                    change delivery schedule and address daily!
+                </p>
+            </div>
+            <div class="step-img-box">
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section class="section-leagues" id="meals">
+        <div class="container center-text">
+            <span class="subheading">Leagues</span>
+            <h2 class="heading-secondary">
+                Wisebet AI predicts from 5 leagues
+            </h2>
+        </div>
+
+        <div class="container grid grid--3-cols margin-bottom-md">
+
+            <div class="league">
+                <a class="" href="#how">
+                    <img src="~/images/logos/premier-league-logo.png"
+                         class="league-img"
+                         alt="Premier League Logo" />
+                    <div class="league-content">
+                        <div class="league-tags">
+                            <span class="tag tag--country">England</span>
+                        </div>
+                        <p class="league-title">Premier League</p>
+                        <ul class="league-attributes">
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon" name="bulb-outline"></ion-icon>
+                                <span>@Model.PremierLeagueTotalPredictions<strong> Predictions</strong></span>
+                            </li>
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon"
+                                          name="trophy-outline"></ion-icon>
+                                <span>@Model.PremierLeagueWins <strong>Wins</strong></span>
+                            </li>
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon" name="thumbs-down-outline"></ion-icon>
+                                <span>@Model.PremierLeagueLost <strong> Lost</strong></span>
+                            </li>
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon" name="disc-outline"></ion-icon>
+                                <span>@Model.PremierLeagueHitRate%<strong> Hit rate</strong></span>
+                            </li>
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon" name="wallet-outline"></ion-icon>
+                                <span>@Model.PremierLeagueProfit<strong> DKK Profit</strong></span>
+                            </li>
+                        </ul>
+                    </div>
+                </a>
+            </div>
+
+            <div class="league">
+                <img src="~/images/logos/serie-a-logo.png"
+                     class="league-img"
+                     alt="Serie A Logo" />
+                <div class="league-content">
+                    <div class="league-tags">
+                        <span class="tag tag--country">Italy</span>
+                    </div>
+                    <p class="league-title">Serie A</p>
+                    <ul class="league-attributes">
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="bulb-outline"></ion-icon>
+                            <span>@Model.SerieATotalPredictions<strong> Predictions</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon"
+                                      name="trophy-outline"></ion-icon>
+                            <span>@Model.SerieAWins <strong>Wins</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="thumbs-down-outline"></ion-icon>
+                            <span>@Model.SerieALost<strong> Lost</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="disc-outline"></ion-icon>
+                            <span>@Model.SerieAHitRate%<strong> Hit rate</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="wallet-outline"></ion-icon>
+                            <span>@Model.SerieAProfit<strong> DKK Profit</strong></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="league">
+                <img src="~/images/logos/la-liga-logo.png"
+                     class="league-img"
+                     alt="La Liga Logo" />
+                <div class="league-content">
+                    <div class="league-tags">
+                        <span class="tag tag--country">Spain</span>
+                    </div>
+                    <p class="league-title">La Liga</p>
+                    <ul class="league-attributes">
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="bulb-outline"></ion-icon>
+                            <span>@Model.LaLigaTotalPredictions<strong> Predictions</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon"
+                                      name="trophy-outline"></ion-icon>
+                            <span>@Model.LaLigaWins <strong>Wins</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="thumbs-down-outline"></ion-icon>
+                            <span>@Model.LaLigaLost<strong> Lost</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="disc-outline"></ion-icon>
+                            <span>@Model.LaLigaHitRate%<strong> Hit rate</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="wallet-outline"></ion-icon>
+                            <span>@Model.LaLigaProfit<strong> DKK Profit</strong></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="league">
+                <img src="~/images/logos/ligue-1-logo.png"
+                     class="league-img"
+                     alt="Ligue 1 Logo" />
+                <div class="league-content">
+                    <div class="league-tags">
+                        <span class="tag tag--country">France</span>
+                    </div>
+                    <p class="league-title">Ligue 1</p>
+                    <ul class="league-attributes">
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="bulb-outline"></ion-icon>
+                            <span>@Model.Ligue1TotalPredictions<strong> Predictions</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon"
+                                      name="trophy-outline"></ion-icon>
+                            <span>@Model.Ligue1Wins <strong>Wins</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="thumbs-down-outline"></ion-icon>
+                            <span>@Model.Ligue1Lost<strong> Lost</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="disc-outline"></ion-icon>
+                            <span>@Model.Ligue1HitRate%<strong> Hit rate</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="wallet-outline"></ion-icon>
+                            <span>@Model.Ligue1Profit<strong> DKK Profit</strong></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="league">
+                <img src="~/images/logos/portugal-logo.jpg"
+                     class="league-img"
+                     alt="Portugal Logo" />
+                <div class="league-content">
+                    <div class="league-tags">
+                        <span class="tag tag--country">Portugal</span>
+                    </div>
+                    <p class="league-title">Primeira Liga</p>
+                    <ul class="league-attributes">
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="bulb-outline"></ion-icon>
+                            <span>@Model.PrimeiraTotalPredictions<strong> Predictions</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon"
+                                      name="trophy-outline"></ion-icon>
+                            <span>@Model.PrimeiraWins <strong>Wins</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="thumbs-down-outline"></ion-icon>
+                            <span>@Model.PrimeiraLost<strong> Lost</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="disc-outline"></ion-icon>
+                            <span>@Model.PrimeiraHitRate%<strong> Hit rate</strong></span>
+                        </li>
+                        <li class="league-attribute">
+                            <ion-icon class="league-icon" name="wallet-outline"></ion-icon>
+                            <span>@Model.PrimeiraProfit<strong> DKK Profit</strong></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="league">
+                <a class="" href="#how">
+                    <img src="~/images/logos/premier-league-logo.png"
+                         class="league-img"
+                         alt="Wisebet Logo" />
+                    <div class="league-content">
+                        <div class="league-tags">
+                            <span class="tag tag--country">AI Betting</span>
+                        </div>
+                        <p class="league-title">Wisebet Totals</p>
+                        <ul class="league-attributes">
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon" name="bulb-outline"></ion-icon>
+                                <span>@Model.TotalPredictionsPlayed<strong> Predictions</strong></span>
+                            </li>
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon"
+                                          name="trophy-outline"></ion-icon>
+                                <span>@Model.totalWins <strong>Wins</strong></span>
+                            </li>
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon" name="thumbs-down-outline"></ion-icon>
+                                <span>@Model.totalLost <strong> Lost</strong></span>
+                            </li>
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon" name="disc-outline"></ion-icon>
+                                <span>@Model.totalHitrate%<strong> Hit rate</strong></span>
+                            </li>
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon" name="wallet-outline"></ion-icon>
+                                <span>@Model.TotalProfit<strong> DKK Profit</strong></span>
+                            </li>
+                            <li class="league-attribute">
+                                <ion-icon class="league-icon" name="trending-up-outline"></ion-icon>
+                                <span>@Model.totalRoi<strong> %</strong></span>
+                            </li>
+                        </ul>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-form" id="form">
+        <div class="container">
+            <span class="subheading">Performance</span>
+            <h2 class="heading-secondary">
+                Our recent prediction form
+            </h2>
+            <h3>Based on our last five predictions</h3>
+        </div>
+
+        <div class="container margin-bottom-md">
+            <div>
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>League</th>
+                            <th>Home Team</th>
+                            <th>Away Team</th>
+                            <th>Tip</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var prediction in Model.RecentPredictions)
+                        {
+                            <tr>
+                                <td>
+                                    @prediction.League
+                                </td>
+                                <td>
+                                    @prediction.HomeTeam
+                                </td>
+                                <td>
+                                    @prediction.AwayTeam
+                                </td>
+                                <td>
+                                    @prediction.Tip
+                                </td>
+                                <td>
+                                    @prediction.Status
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section-cta" id="cta">
+        <div class="container">
+            <div class="cta">
+                <div class="cta-text-box">
+                    <h2 class="heading-secondary">Get your first prediction for free!</h2>
+                    <p class="cta-text">
+                        Easy, tasty and hassle-free money are waiting for you. Start
+                        winning today. You can cancel or pause anytime. And the
+                        first prediction is on us!
+                    </p>
+
+                    <form class="cta-form" name="sign-up" netlify>
+                        <div>
+                            <label for="full-name">Full Name</label>
+                            <input id="full-name"
+                                   type="text"
+                                   placeholder="John Smith"
+                                   name="full-name"
+                                   required />
+                        </div>
+                        <div>
+                            <label for="email">Email address</label>
+                            <input id="email"
+                                   type="email"
+                                   placeholder="me@example.com"
+                                   name="email"
+                                   required />
+                        </div>
+                        <div>
+                            <label for="select-where">Where did you hear from us?</label>
+                            <select id="select-where" name="select-where" required>
+                                <option value="">Please choose one option:</option>
+                                <option value="friends">Friends and family</option>
+                                <option value="youtube">YouTube video</option>
+                                <option value="podcast">Podcast</option>
+                                <option value="ad">Facebook ad</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn--form">Sign up now</button>
+                    </form>
+                </div>
+                <div class="cta-img-box"
+                     role="img"
+                     aria-label="Woman enjoying food"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="container grid grid--footer">
+            <div class="logo-col">
+                <a href="#" class="footer-logo">
+                    <img class="logo" alt="Wisebet logo" src="~/images/test.png" />
+                </a>
+
+                <ul class="social-links">
+                    <li>
+                        <a class="footer-link" href="#">
+                            <ion-icon class="social-icon" name="logo-instagram"></ion-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="footer-link" href="#">
+                            <ion-icon class="social-icon" name="logo-facebook"></ion-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="footer-link" href="#">
+                            <ion-icon class="social-icon" name="logo-twitter"></ion-icon>
+                        </a>
+                    </li>
+                </ul>
+                <p class="copyright">
+                    Copyright &copy; <span class="year">2027</span> by Wisebet, Inc.
+                    All rights reserved.
+                </p>
+            </div>
+            <div class="address-col">
+                <p class="footer-heading">Contact us</p>
+                <address class="contacts">
+                    <p class="address">
+                        Paradisæblevej 111, Andeby
+                    </p>
+                    <p>
+                        <a class="footer-link" @*href="tel:"*@>123-456-7890</a><br />
+                        <a class="footer-link" @*href="mailto:me@email.com"*@>me@email.com</a>
+                    </p>
+                </address>
+            </div>
+            <nav class="nav-col">
+                <p class="footer-heading">Account</p>
+                <ul class="footer-nav">
+                    <li><a class="footer-link" href="#">Create account</a></li>
+                    <li><a class="footer-link" href="#">Sign in</a></li>
+                    <li><a class="footer-link" href="#">iOS app</a></li>
+                    <li><a class="footer-link" href="#">Android app</a></li>
+                </ul>
+            </nav>
+
+            <nav class="nav-col">
+                <p class="footer-heading">Company</p>
+                <ul class="footer-nav">
+                    <li><a class="footer-link" href="#">About Wisebet</a></li>
+                    <li><a class="footer-link" href="#">For Business</a></li>
+                    <li><a class="footer-link" href="#">Cooking partners</a></li>
+                    <li><a class="footer-link" href="#">Careers</a></li>
+                </ul>
+            </nav>
+
+            <nav class="nav-col">
+                <p class="footer-heading">Resources</p>
+                <ul class="footer-nav">
+                    <li><a class="footer-link" href="#">Prediction history </a></li>
+                    <li><a class="footer-link" href="#">Help center</a></li>
+                    <li><a class="footer-link" href="#">Privacy & terms</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+</main>

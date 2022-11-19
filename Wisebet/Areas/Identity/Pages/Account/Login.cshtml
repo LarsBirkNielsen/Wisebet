@@ -1,0 +1,82 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+
+
+
+
+<form method="post" class="login-form">
+    <h3>Login Here</h3>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <label asp-for="Input.Email" class="login-text">Username</label>
+    <input asp-for="Input.Email" placeholder="Username" class="form-control" autocomplete="username" aria-required="true">
+    <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+    <label asp-for="Input.Password" class="login-text"></label>
+    <input asp-for="Input.Password" placeholder="Password" class="form-control" autocomplete="current-password" aria-required="true">
+    <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+    <button id="login-submit" type="submit" class="login-button">Log in</button>
+    <div>
+        <p class="login-sub-link">
+            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+        </p>
+        <p class="login-sub-link">
+            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+        </p>
+    </div>
+</form>
+@*<section class="section-login" id="cta">
+    <div class="container-login">
+    <div class="login">
+    <section>
+    <form id="account" method="post class="login-form">
+    <h2>Use a local account to log in.</h2>
+    <hr />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-floating">
+    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+    <label asp-for="Input.Email" class="login-text"></label>
+    <span asp-validation-for="Input.Email" class="text-danger"></span>
+    </div>
+    <div class="form-floating">
+    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+    <label asp-for="Input.Password" class="login-text"></label>
+    <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+    <div>
+    <div class="checkbox">
+    <label asp-for="Input.RememberMe" class="form-label">
+    <input class="form-check-input" asp-for="Input.RememberMe" />
+    @Html.DisplayNameFor(m => m.Input.RememberMe)
+    </label>
+    </div>
+    </div>
+    <div>
+    <button id="login-submit" type="submit" class="btn btn--form">Log in!</button>
+    </div>
+    <div>
+    <p>
+    <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+    </p>
+    <p>
+    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+    </p>
+    <p>
+    <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+    </p>
+    </div>
+    </form>
+    </section>
+    </div>
+    </div>*@
+
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}

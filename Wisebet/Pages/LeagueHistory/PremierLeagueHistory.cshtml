@@ -1,0 +1,70 @@
+﻿@page
+@model Wisebet.Pages.LeagueHistory.PremierLeagueHistoryModel
+
+<section class="section-result">
+    <div class="container-table">
+        <h2 class="heading-primary history">Premier League History</h2>
+        <table class="performance-table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prediction[0].KickOff)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prediction[0].League)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prediction[0].HomeTeam)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prediction[0].AwayTeam)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prediction[0].Tip)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prediction[0].Odds)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prediction[0].Stake)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prediction[0].Status)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Prediction)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.KickOff)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.League)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HomeTeam)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AwayTeam)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tip)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Odds)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Stake)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
