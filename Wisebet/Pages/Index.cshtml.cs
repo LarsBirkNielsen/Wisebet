@@ -11,11 +11,6 @@ namespace Wisebet.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly ApplicationDbContext _context;
 
-
-
-
-
-
         public IndexModel(ILogger<IndexModel> logger,
             ApplicationDbContext context)
         {
@@ -25,10 +20,9 @@ namespace Wisebet.Pages
 
         public void OnGet()
         {
-            GetTotalProfit();
-            //GetTotalHitRate();
             GetCountValues();
-            LeagueProfit();
+            GetRecentPredictions();
+            LeagueStats();
             GetPendingCount();
             GetTotalStats();
         }
@@ -43,25 +37,25 @@ namespace Wisebet.Pages
             }    
         }
 
+        public int  TotalPredictionsPlayed, WinsCount, LostCount, PendingCount;
         private void GetCountValues()
         {
-            //Stats Section
-            //TotalPredictions = _context.Prediction.Count();
+            //Values For Stats Section
             WinsCount = _context.Prediction.Count(prediction => prediction.Status == "Won");
             LostCount = _context.Prediction.Count(prediction => prediction.Status == "Lost");
             PendingCount = _context.Prediction.Count(prediction => prediction.Status == "Pending");
-            TotalPredictionsPlayed = (WinsCount + LostCount);
-
-
-            //Performance table
-            RecentPredictions = _context.Prediction.Where(prediction => prediction.Status != "Pending").ToList();
-            RecentPredictions = RecentPredictions.OrderByDescending(prediction => prediction.Id).Take(5).ToList();
-
-
+            TotalPredictionsPlayed = (WinsCount + LostCount);       
         }
 
-        public int TotalPredictions, TotalPredictionsPlayed, WinsCount, LostCount, PendingCount;
+        //Performance table
         public List<Prediction> RecentPredictions = new List<Prediction>();
+        private void GetRecentPredictions()
+        {
+            RecentPredictions = _context.Prediction.Where(prediction => prediction.Status != "Pending").ToList();
+            RecentPredictions = RecentPredictions.OrderByDescending(prediction => prediction.Id).Take(5).ToList();
+        }
+
+
 
         public int PremierLeagueTotalPredictions, PremierLeagueWins, PremierLeagueLost;
         public double PremierLeagueHitRate, PremierLeagueProfit, PremierLeagueProfitLost, PremierLeagueTotal, PremierLeagueTotalStake;
@@ -77,29 +71,8 @@ namespace Wisebet.Pages
 
         public int PrimeiraTotalPredictions, PrimeiraWins, PrimeiraLost;
         public double PrimeiraHitRate, PrimeiraProfit, PrimeiraProfitLost, PrimeiraTotal, PrimeiraTotalStake;
-        public double TotalProfit, TotalHitRate;
 
-
-
-
-        private void GetTotalProfit()
-        {
-            List<Prediction> predictions = _context.Prediction.ToList();
-
-            foreach(Prediction prediction in predictions)
-            {
-                if(prediction.Status == "Lost")
-                {
-                    TotalProfit -= prediction.Stake;
-                }else if(prediction.Status == "Won")
-                {
-                    TotalProfit += (Convert.ToDouble(prediction.Odds) * prediction.Stake) - prediction.Stake;
-                }
-            }
-        }
-
-
-        private void LeagueProfit()
+        private void LeagueStats()
         {
             List<Prediction> predictions = _context.Prediction.ToList();
 
@@ -209,38 +182,28 @@ namespace Wisebet.Pages
             }
         }
 
-        public int PredictionsPlayedTotal, totalWins, totalLost; 
-        public double totalProfit, totalHitrate, totalWager, totalRoi;
+        public double TotalProfit, TotalHitrate, TotalRoi;
         private void GetTotalStats()
         {
+            double totalWager = 0;
             List<Prediction> predictions = _context.Prediction.ToList();
 
-            totalWins = predictions.Count((x => x.Status ==("Won")));
-            totalLost = predictions.Count((x => x.Status == ("Lost")));
-            PredictionsPlayedTotal = totalWins + totalLost;
-            totalHitrate = Math.Round(((double)totalWins / (double)PredictionsPlayedTotal) * 100);
+            TotalHitrate = Math.Round(((double)WinsCount / (double)TotalPredictionsPlayed) * 100);
 
             foreach(var prediction in predictions)
             {
                 if(prediction.Status == "Won")
                 {
-                    totalProfit = totalProfit + (prediction.Stake * Double.Parse(prediction.Odds)) - prediction.Stake;
+                    TotalProfit = TotalProfit + (prediction.Stake * Double.Parse(prediction.Odds)) - prediction.Stake;
                     totalWager = totalWager + prediction.Stake;
                 }
                 else if(prediction.Status == "Lost")
                 {
-                    totalProfit = totalProfit + prediction.Stake * -1;
+                    TotalProfit = TotalProfit + prediction.Stake * -1;
                     totalWager = totalWager + prediction.Stake;
                 }
             }
-
-            totalRoi = Math.Round((totalProfit / (PredictionsPlayedTotal * totalWager) * 100),2);
-
-
-            //PremierLeagueHitRate = (PremierLeagueWins / PremierLeagueTotalPredictions) * 100;
-            Console.WriteLine("WINS COUNT: " + totalWins);
-            Console.WriteLine("Total Predictions COUNT: " + PredictionsPlayedTotal);
-            Console.WriteLine("Total Predictions COUNT: " + totalHitrate);
+            TotalRoi = Math.Round((TotalProfit / (TotalPredictionsPlayed * totalWager) * 100),2)+1;
         }
     }
 }
